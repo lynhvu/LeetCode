@@ -1,16 +1,20 @@
 class ProductOfNumbers {
     List<Integer> storage;
+    int lastProduct;
     public ProductOfNumbers() {
         storage = new ArrayList<>();
         storage.add(1);
+        lastProduct = 1;
     }
     
     public void add(int num) {
         if(num == 0) { // reset the storage
-            storage.clear();
+            storage = new ArrayList<>();
             storage.add(1);
+            lastProduct = 1;
         } else {
-            storage.add(num * storage.get(storage.size() - 1));
+            lastProduct *= num;
+            storage.add(lastProduct);
         }
     }
     
@@ -18,7 +22,7 @@ class ProductOfNumbers {
         if (k >= storage.size()) {
             return 0;
         } else {
-            return storage.get(storage.size() - 1)/ storage.get(storage.size() - k - 1);
+            return lastProduct/ storage.get(storage.size() - k - 1);
         }
     }
 }
