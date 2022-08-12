@@ -16,16 +16,21 @@
 class Solution {
     public int kthSmallest(TreeNode root, int k) {
         if (root == null || k <= 0) return -1;
-        ArrayList<Integer> res = nodeArray(root, new ArrayList<>());
-        return res.get(k - 1);
+        int[] res = new int[]{0, -1}; // two spaces: index and value to return
+        nodeArray(root, k, res);
+        return res[1];
     }
     
-    private ArrayList<Integer> nodeArray (TreeNode root, ArrayList<Integer> temp) {
-       if (root == null) return temp;
-        nodeArray(root.left, temp);
-        temp.add(root.val);
-        nodeArray(root.right, temp);
-        
-        return temp;
+    private void nodeArray (TreeNode root, int k, int[] res) {
+       if (root == null) return ;
+        // keep going left becasue that's where min value is
+        nodeArray(root.left, k, res);
+        // since we traverse through a binary search tree, we will reach to the smallest val first, so when we reach the kth value, we stop the traverse
+        res[0] += 1;
+        if (res[0] == k) {
+            res[1] = root.val;
+            return;
+        }
+        nodeArray(root.right, k, res);
     }
 }
